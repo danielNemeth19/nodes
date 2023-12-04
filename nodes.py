@@ -1,23 +1,26 @@
+import random
+import argparse
+from pathlib import Path
 import networkx as nx
 import matplotlib.pyplot as plt
 
 
-def create_test_list() -> list:
-    test_data = [
-            {"job_name": "root", "level": 0},
-            {"job_name": "A", "level": 1},
-            {"job_name": "A1", "level": 2},
-            {"job_name": "A2", "level": 2},
-            {"job_name": "B", "level": 1},
-            {"job_name": "B1", "level": 2},
-            {"job_name": "BB1", "level": 3},
-            {"job_name": "BB2", "level": 3},
-            {"job_name": "C", "level": 1}
+def create_test_list(n) -> list:
+    level = 1
+    nodes = [
+            {"job_name": "root", "level": 0, "index": 0},
     ]
+    for i in range(n):
+        if i == 0:
+            level = 1
+        else:
+            level -= random.randint(-1, 1)
+        if level == 0:
+            level += 1
+        node = {"job_name": f"{i}-{level}", "level": level, "index": i+1}
+        nodes.append(node)
 
-    for i, data in enumerate(test_data):
-        data['index'] = i
-    return test_data
+    return nodes
 
 
 class TreeBuilder:
@@ -55,16 +58,41 @@ class TreeBuilder:
 
     def visualize_parents(self):
         nodes = self.build_nodes()
+
+        for node in nodes:
+            print(node)
+
         edges = [(node["index"], node["parent_id"]) for node in nodes if node["level"]]
         labels = {node["index"]: node["job_name"] for node in nodes}
+
+        fig = plt.figure(figsize=(20, 10))
         g = nx.Graph()
         g.add_edges_from(edges)
-        nx.draw_networkx(g, labels=labels)
-        plt.show()
+        nx.draw_networkx(g, arrows=True, labels=labels)
+        # plt.show()
+
+        plt.tight_layout()
+        fp = Path(Path.cwd(), "nodes.pdf")
+        fig.savefig(fp)
+        plt.close(fig)
+
+
+def pars_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--nodes", type=int, default=10, help="Number of nodes to test with")
+    args = parser.parse_args()
+    return args.nodes
 
 
 def main():
-    data = create_test_list()
+    number_of_nodes = pars_args()
+    # data = create_test_list(number_of_nodes)
+    data = [
+            {"job_name": "root", "level": 0, "index": 0},
+            {"job_name": "lev-1-1", "level": 1, "index": 1},
+            {"job_name": "lev-1-2", "level": 1, "index": 2},
+            {"job_name": "lev-2-1", "level": 2, "index": 3}
+            ]
     builder = TreeBuilder(data=data)
     builder.visualize_parents()
 
