@@ -46,9 +46,10 @@ class TreeBuilder:
                 parent_info = self.parent_cache.get(level-1)
                 node.update(parent_info)
                 self.set_parent_cache(level, node)
-            elif level == self.previous_level:
+            else:
                 parent_info = self.parent_cache.get(level-1)
                 node.update(parent_info)
+                self.set_parent_cache(level, node)
             self.previous_level = level
         return nodes
 
@@ -69,8 +70,7 @@ class TreeBuilder:
         g = nx.Graph()
         g.add_edges_from(edges)
         nx.draw_networkx(g, arrows=True, labels=labels)
-        # plt.show()
-
+        plt.show()
         plt.tight_layout()
         fp = Path(Path.cwd(), "nodes.pdf")
         fig.savefig(fp)
@@ -86,13 +86,7 @@ def pars_args():
 
 def main():
     number_of_nodes = pars_args()
-    # data = create_test_list(number_of_nodes)
-    data = [
-            {"job_name": "root", "level": 0, "index": 0},
-            {"job_name": "lev-1-1", "level": 1, "index": 1},
-            {"job_name": "lev-1-2", "level": 1, "index": 2},
-            {"job_name": "lev-2-1", "level": 2, "index": 3}
-            ]
+    data = create_test_list(number_of_nodes)
     builder = TreeBuilder(data=data)
     builder.visualize_parents()
 
