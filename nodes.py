@@ -67,9 +67,27 @@ class TreeBuilder:
         labels = {node["index"]: node["job_name"] for node in nodes}
 
         fig = plt.figure(figsize=(20, 10))
-        g = nx.Graph()
+        g = nx.DiGraph()
         g.add_edges_from(edges)
-        nx.draw_networkx(g, arrows=True, labels=labels)
+        root_edges = [(edge[0], edge[1]) for edge in edges if edge[1] == 0]
+        non_root_edges = [(edge[0], edge[1]) for edge in edges if edge[1] != 0]
+        print(root_edges)
+        print(non_root_edges)
+
+        pos = nx.spring_layout(g)
+        nx.draw_networkx_nodes(g, pos, node_size=900)
+        nx.draw_networkx_labels(g, pos, labels=labels)
+        nx.draw_networkx_edges(
+                g, pos,
+                edgelist=root_edges, edge_color='red', width=3,
+                arrowstyle="<|-", arrows=True, arrowsize=20
+        )
+        nx.draw_networkx_edges(
+                g, pos,
+                edgelist=non_root_edges, edge_color='green', width=2,
+                arrowstyle="<|-", arrows=True, arrowsize=20
+        )
+
         plt.show()
         plt.tight_layout()
         fp = Path(Path.cwd(), "nodes.pdf")
