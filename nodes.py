@@ -7,9 +7,7 @@ import matplotlib.pyplot as plt
 
 def create_test_list(n) -> list:
     level = 1
-    nodes = [
-            {"job_name": "root", "level": 0, "index": 0},
-    ]
+    nodes = [{"job_name": "root", "level": 0, "index": 0}]
     for i in range(n):
         if i == 0:
             level = 1
@@ -19,7 +17,6 @@ def create_test_list(n) -> list:
             level += 1
         node = {"job_name": f"{i}-{level}", "level": level, "index": i+1}
         nodes.append(node)
-
     return nodes
 
 
@@ -36,26 +33,30 @@ class TreeBuilder:
         for node in nodes:
             level = node["level"]
             if level == self.ROOT_LEVEL:
-                self.set_parent_cache(self.ROOT_LEVEL, node)
+                self.set_parent_for_level(self.ROOT_LEVEL, node)
                 node.update({"parent_name": None, "parent_id": None})
             elif level > self.previous_level:
-                parent_info = self.parent_cache.get(self.previous_level)
+                parent_info = self.get_parent_for_level(self.previous_level)
                 node.update(parent_info)
-                self.set_parent_cache(level, node)
+                self.set_parent_for_level(level, node)
             elif level < self.previous_level:
-                parent_info = self.parent_cache.get(level-1)
+                parent_info = self.get_parent_for_level(level-1)
                 node.update(parent_info)
-                self.set_parent_cache(level, node)
+                self.set_parent_for_level(level, node)
             else:
-                parent_info = self.parent_cache.get(level-1)
+                parent_info = self.get_parent_for_level(level-1)
                 node.update(parent_info)
-                self.set_parent_cache(level, node)
+                self.set_parent_for_level(level, node)
             self.previous_level = level
         return nodes
 
-    def set_parent_cache(self, level, node) -> None:
-        parent_info = {"parent_name": node["job_name"], "parent_id": node["index"]}
+    def set_parent_for_level(self, level: int, node: dict) -> None:
+        parent_info = {"id": node["index"], "name": node["job_name"]}
         self.parent_cache[level] = parent_info
+
+    def get_parent_for_level(self, level_to_get: int) -> dict:
+        parent = self.parent_cache.get(level_to_get)
+        return {"parent_id": parent["id"], "parent_name": parent["name"]}
 
     def visualize_parents(self):
         nodes = self.build_nodes()
