@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="styles.css" /> 
+	</head>
+	<body>
+		<div id="container">
+			<table id="myTable">
+				<thead>
+					<tr>
+						<th>Node</th>
+						<th>Parent Name</th>
+						<th>Parent Id</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr level="0">
+						<td>root</td>
+						<td>None</td>
+						<td>None</td>
+					</tr>
+					<tr level="1">
+						<td class="level-1-indent">node-1</td>
+						<td>root</td>
+						<td>0</td>
+					</tr>
+					<tr level="2">
+						<td class="level-2-indent">node-1-1</td>
+						<td>node-1</td>
+						<td>1</td>
+					</tr>
+					<tr level="2">
+						<td class="level-2-indent">node-1-2</td>
+						<td>node-1</td>
+						<td>1</td>
+					</tr>
+					<tr level="1">
+						<td class="level-1-indent">node-2</td>
+						<td>root</td>
+						<td>0</td>
+					</tr>
+					<tr level="2">
+						<td class="level-2-indent">node-2-1</td>
+						<td>node-2</td>
+						<td>4</td>
+					</tr>
+					<tr level="1">
+						<td class="level-1-indent">node-3</td>
+						<td>root</td>
+						<td>0</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript" src="collapse.js"></script>
+</html>

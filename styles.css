@@ -1,0 +1,41 @@
+:root {
+    --font-family: "Ubuntu Mono", monospace;
+    /* --font-family: 'Manrope', sans-serif;*/
+    --gradient-text: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
+    --gradient-bar: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
+    --color-bg: #040C18;
+    --color-footer: #031B34;
+    --color-blog: #042c54;
+    --color-text: #81AFDD;
+    --color-subtext: #FF8A71;
+}
+
+body {
+	font-family: var(--font-family);
+	background: var(--color-bg);
+	color: var(--color-subtext);
+}
+
+#container {
+	margin-left: auto;
+	margin-right: auto;
+	width:40%;
+}
+
+#myTable {
+	margin-top:100px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1.5em;
+	text-align: left;
+	border: 1px solid;
+	width: 800px;
+}
+
+#myTable td.level-1-indent {
+	padding-left: 15px;
+}
+
+#myTable td.level-2-indent {
+	padding-left: 30px;
+}

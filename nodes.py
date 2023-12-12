@@ -5,7 +5,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-def create_test_list(n) -> list:
+def create_test_list(n: int) -> list:
     level = 1
     nodes = [{"job_name": "root", "level": 0, "index": 0}]
     for i in range(n):
@@ -23,7 +23,7 @@ def create_test_list(n) -> list:
 class TreeBuilder:
     ROOT_LEVEL = 0
 
-    def __init__(self, data):
+    def __init__(self, data: list):
         self.data = data
         self.previous_level = self.ROOT_LEVEL
         self.parent_cache = {}
