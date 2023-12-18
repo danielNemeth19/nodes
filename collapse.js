@@ -27,9 +27,8 @@ function tableToTree(table_Selector, tr_OpenedClass, tr_VisibleClass, tr_ToggleB
 		});
 	});
 	function nextTr(row){
-		while ((row=row.nextSibling) && row.nodeType != 1) {
-			return row
-		}
+		while ((row=row.nextSibling) && row.nodeType != 1);
+		return row
 	}
 	trs.forEach(function(tr, index){
 		if (index < trs.length - 1) {
@@ -38,7 +37,23 @@ function tableToTree(table_Selector, tr_OpenedClass, tr_VisibleClass, tr_ToggleB
 				td1.innerHTML = tr_ToggleButton + td1.innerHTML
 			}
 		}
-	});
+	})
+
+	table.addEventListener("click", function(e){
+		e.preventDefault()
+		if (e.target.outerHTML != tr_ToggleButton) {
+			return;
+		}
+		let row = e.target.closest('tr')
+		row.classList.toggle(tr_OpenedClass)
+		let lvl = +(row.getAttribute("level"));
+
+		while ((row = nextTr(row)) && ((+(row.getAttribute("level")) == (lvl + 1)) || row.className.includes(tr_VisibleClass))) {
+			row.classList.remove(tr_OpenedClass);
+			row.classList.toggle(tr_VisibleClass);
+		}
+	})
+
 }
 
 tableToTree("#myTable", 'opened', 'visible', '<span class="toggle"></span>')

@@ -32,10 +32,26 @@ body {
 	width: 800px;
 }
 
+#myTable tbody tr {
+	display: none;
+}
+
+#myTable tr[level="0"], #myTable tr.visible {
+	display: table-row;
+}
+
 #myTable td.level-1-indent {
 	padding-left: 15px;
 }
 
 #myTable td.level-2-indent {
 	padding-left: 30px;
+}
+
+.toggle::after {
+	content: "[+]";
+}
+
+.opened .toggle::after {
+	content: "[-]";
 }
