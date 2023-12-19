@@ -47,6 +47,9 @@ body {
 #myTable td.level-2-indent {
 	padding-left: 30px;
 }
+#myTable td.level-3-indent {
+	padding-left: 45px;
+}
 
 .toggle::after {
 	content: "[+]";
