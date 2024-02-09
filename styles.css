@@ -27,13 +27,16 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	font-size: 1.5em;
-	text-align: left;
 	border: 1px solid;
 	width: 800px;
 }
 
 #myTable tbody tr {
 	display: none;
+}
+
+#myTable tbody tr td:first-child {
+	text-align: left;
 }
 
 #myTable tr[level="0"], #myTable tr.visible {
@@ -49,12 +52,4 @@ body {
 }
 #myTable td.level-3-indent {
 	padding-left: 45px;
-}
-
-.toggle::after {
-	content: "[+]";
-}
-
-.opened .toggle::after {
-	content: "[-]";
 }
